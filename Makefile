@@ -6,7 +6,7 @@
 #    By: mpetruno <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/06 15:38:01 by mpetruno          #+#    #+#              #
-#    Updated: 2019/03/07 12:37:20 by mpetruno         ###   ########.fr        #
+#    Updated: 2019/03/07 22:00:24 by mpetruno         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = mpetruno.filler
 
 CC = gcc
 
-FLAGS = -Wall -Werror -Wextra -g # -fsanitize=address
+FLAGS = -Wall -Werror -Wextra -g
 
 SRC_DIR = ./src/
 OBJ_DIR = ./obj/
