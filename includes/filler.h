@@ -6,7 +6,7 @@
 /*   By: mpetruno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 15:37:01 by mpetruno          #+#    #+#             */
-/*   Updated: 2019/03/07 16:16:49 by mpetruno         ###   ########.fr       */
+/*   Updated: 2019/03/07 18:03:00 by mpetruno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define FILLER_H
 
 # include "libft.h"
+
+# define DL(X, Y) (X > Y) ? X - Y : Y - X
+# define MIN(X, Y) (X < Y) ? X : Y
 
 typedef struct	s_piece
 {
@@ -36,13 +39,9 @@ extern int		g_min_dist;
 extern int		g_x;
 extern int		g_y;
 
-
-
 /*
 ** read_inp.c
 */
-int				read_next(void);
-int				init_map(void);
 int				read_map(void);
 int				read_piece(void);
 

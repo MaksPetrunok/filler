@@ -6,14 +6,11 @@
 /*   By: mpetruno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 15:40:36 by mpetruno          #+#    #+#             */
-/*   Updated: 2019/03/07 17:14:37 by mpetruno         ###   ########.fr       */
+/*   Updated: 2019/03/07 18:02:33 by mpetruno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
-#include "fcntl.h"
-
-int	dbg; // remove
 
 char	**g_map = NULL;
 int		g_h;
@@ -24,9 +21,6 @@ t_piece	*g_p;
 int		g_min_dist;
 int		g_x;
 int		g_y;
-
-# define DL(X, Y) (X > Y) ? X - Y : Y - X
-# define MIN(X, Y) (X < Y) ? X : Y
 
 int		dist(int i, int j)
 {
@@ -52,7 +46,6 @@ int		dist(int i, int j)
 	return (md);
 }
 
-
 int		put(int i, int j)
 {
 	int	count;
@@ -66,13 +59,11 @@ int		put(int i, int j)
 		x = g_p->min_x - 1;
 		while (++x <= g_p->max_x)
 		{
-//ft_dprintf(dbg, "Check at (%d, %d)\n", y, x);
-
 			if (g_p->map[y][x] == '*' && (g_map[i + y][j + x] == g_symbol_op ||
-				 g_map[i + y][j + x] == g_symbol_op - ('a' - 'A')))
+				g_map[i + y][j + x] == g_symbol_op - ('a' - 'A')))
 				return (0);
 			if (g_p->map[y][x] == '*' && (g_map[i + y][j + x] == g_symbol ||
-				 g_map[i + y][j + x] == g_symbol - ('a' - 'A')))
+				g_map[i + y][j + x] == g_symbol - ('a' - 'A')))
 				count++;
 			if (count > 1)
 				return (0);
@@ -80,7 +71,6 @@ int		put(int i, int j)
 	}
 	return (count);
 }
-
 
 void	place_piece(void)
 {
@@ -94,7 +84,6 @@ void	place_piece(void)
 		j = 0 - g_p->min_x;
 		while (j < g_w - g_p->max_x)
 		{
-//ft_dprintf(dbg, "Placing at (%d, %d)\n", i, j);
 			if (put(i, j) == 1 && (md = dist(i, j)) < g_min_dist)
 			{
 				g_min_dist = md;
@@ -108,42 +97,22 @@ void	place_piece(void)
 	ft_printf("%d %d\n", g_y, g_x);
 }
 
-
-void	debug() {
-	ft_dprintf(dbg, " ------------------- NEW TURN -----------------\n");
-	ft_dprintf(dbg, "My symbol:       %c\n", g_symbol); //
-	ft_dprintf(dbg, "Opponent symbol: %c\n", g_symbol_op); //
-	// print map
-	ft_dprintf(dbg, "Map size: %dx%d\n", g_h, g_w); //
-	for (int i=0; i<g_h; i++)
-		ft_dprintf(dbg, "%s\n", g_map[i]);
-	// print piece
-	ft_dprintf(dbg, "Piece size: %dx%d\n", g_p->h, g_p->w); //
-	for (int i=0; i<g_p->h; i++)
-		ft_dprintf(dbg, "%s\n", g_p->map[i]);
-	ft_dprintf(dbg, "x: %d-%d, y: %d-%d\n",
-			g_p->min_x, g_p->max_x, g_p->min_y, g_p->max_y);
-	int	x;
-	int	y;
-
-	ft_dprintf(dbg, "-- Normmalized piece --\n");
-	y = g_p->min_y;
-	while (y <= g_p->max_y)
+int		read_next(void)
+{
+	if (!read_map() || !read_piece())
 	{
-		x = g_p->min_x;
-		while (x <= g_p->max_x)
-		{
-			ft_dprintf(dbg, "[%d][%d]=", y, x);
-			ft_dprintf(dbg, "%c\n", g_p->map[y][x++]);
-		}
-		ft_dprintf(dbg, "\n");
-		y++;
+		free_map();
+		free_piece();
+		return (0);
 	}
+	g_min_dist = 999999;
+	g_x = 0;
+	g_y = 0;
+	return (1);
 }
 
-int main(void)
+int		main(void)
 {
-dbg = open("/Users/mpetruno/Projects/filler/debug",	O_WRONLY|O_CREAT|O_TRUNC);
 	char	*inp;
 
 	g_map = NULL;
@@ -152,23 +121,11 @@ dbg = open("/Users/mpetruno/Projects/filler/debug",	O_WRONLY|O_CREAT|O_TRUNC);
 		g_symbol = inp[10] == '1' ? 'o' : 'x';
 	g_symbol_op = g_symbol == 'o' ? 'x' : 'o';
 	free((void *)inp);
-ft_dprintf(dbg, "\n=============| Symbol = %c |=============\n", g_symbol);
 	while (read_next())
 	{
-if (0)
-debug(); //////////////////////////////////////////////////////////////////
 		place_piece();
 		free_map();
 		free_piece();
-//ft_dprintf(dbg, "================================================\n");
 	}
-// Pring leaks to debug file
-char *dbg_str = ft_itoa(dbg);
-ft_dprintf(dbg, "DEBUG FD: %s\n", dbg_str);
-char *str = ft_strjoin("leaks mpetruno.filler 1>&", dbg_str);
-ft_dprintf(dbg, "%s\n", str);
-system(str);
-close(dbg);
-// ---------------------------
 	return (0);
 }

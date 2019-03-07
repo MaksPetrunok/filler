@@ -1,2 +1,0 @@
-#!/bin/bash
-./resources/filler_vm -f resources/maps/map02 -p2 ./mpetruno.filler -p1 ./resources/players/abanlin.filler > file

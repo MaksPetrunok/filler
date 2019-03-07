@@ -6,16 +6,13 @@
 /*   By: mpetruno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 20:07:34 by mpetruno          #+#    #+#             */
-/*   Updated: 2019/03/07 16:17:55 by mpetruno         ###   ########.fr       */
+/*   Updated: 2019/03/07 18:01:31 by mpetruno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
-#include "fcntl.h"
 
-extern int	dbg;
-
-void	normalize(t_piece *p)
+static void	normalize(t_piece *p)
 {
 	int	i;
 	int	j;
@@ -39,7 +36,7 @@ void	normalize(t_piece *p)
 	}
 }
 
-int	read_piece(void)
+int			read_piece(void)
 {
 	char	*inp;
 	int		i;
@@ -68,7 +65,7 @@ int	read_piece(void)
 	return (0);
 }
 
-int	init_map(void)
+static int	init_map(void)
 {
 	char	*inp;
 	int		i;
@@ -92,7 +89,7 @@ int	init_map(void)
 	return (0);
 }
 
-int	read_map(void)
+int			read_map(void)
 {
 	int		i;
 	int		j;
@@ -116,19 +113,5 @@ int	read_map(void)
 		g_map[i++] = ft_strdup(tmp + j);
 		free((void *)tmp);
 	}
-	return (1);
-}
-
-int	read_next(void)
-{
-	if (!read_map() || !read_piece())
-	{
-		free_map();
-		free_piece();
-		return (0);
-	}
-	g_min_dist = 999999;
-	g_x = 0;
-	g_y = 0;
 	return (1);
 }
