@@ -6,7 +6,7 @@
 /*   By: mpetruno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 20:07:34 by mpetruno          #+#    #+#             */
-/*   Updated: 2019/03/06 21:29:16 by mpetruno         ###   ########.fr       */
+/*   Updated: 2019/03/07 16:17:55 by mpetruno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int	init_map(void)
 			return (0);
 		return (1);
 	}
+	if (inp)
+		free((void *)inp);
 	return (0);
 }
 
@@ -96,9 +98,11 @@ int	read_map(void)
 	int		j;
 	char	*tmp;
 
-	i = 0;
+	if (!init_map())
+		return (0);
 	get_next_line(0, &tmp);
 	free((void *)tmp);
+	i = 0;
 	while (i < g_h)
 	{
 		j = 0;
@@ -123,5 +127,8 @@ int	read_next(void)
 		free_piece();
 		return (0);
 	}
+	g_min_dist = 999999;
+	g_x = 0;
+	g_y = 0;
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: mpetruno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 15:37:01 by mpetruno          #+#    #+#             */
-/*   Updated: 2019/03/06 22:08:43 by mpetruno         ###   ########.fr       */
+/*   Updated: 2019/03/07 16:16:49 by mpetruno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ extern int		g_h;
 extern char		g_symbol;
 extern char		g_symbol_op;
 extern t_piece	*g_p;
+extern int		g_min_dist;
+extern int		g_x;
+extern int		g_y;
 
 
 
