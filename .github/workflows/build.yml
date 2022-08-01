@@ -1,0 +1,37 @@
+name: Build apps
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+    inputs:
+      apps:
+        description: |
+          Applications to be built.
+          I.e. "cronjobs api-invoker"
+        required: true
+      release_type:
+        description: |
+          release|snapshot
+        required: true
+        default: snapshot
+      scala_branch:
+        description: |
+          Scala branch to be used for image build
+        required: true
+      skip_tests:
+        description: |
+          Skip running tests before building image(s): y/n
+        required: false
+        default: false
+
+jobs:
+  changed-apps:
+    name: Derive changed apps
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Echo scala branch
+        run: |
+          echo "Scala branch is ${{ github.event.inputs.scala_branch }}"
